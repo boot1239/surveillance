@@ -1,33 +1,35 @@
 {% extends 'page.html' %}
 {% from 'macros.html' import render_field %}
 {% block content %}
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Dashboard</h1>
-    </div>
-    <div class="table-responsive">
-        <table class="table table-striped table-sm">
-            <thead>
-                <tr>
-                    <th>Citizen ID</th>
-                    <th>Full Name</th>
-                    <th>Gender</th>
-                    <th>Birthdate</th>
-                    <th>Address</th>
-                    <th>Current Location</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for citizen in citizens %}
-                    <tr>
-                        <td>{{ citizen.citizen_id }}</td>
-                        <td>{{ citizen.first_name }} {{ citizen.last_name }}</td>
-                        <td>{{ citizen.gender }}</td>
-                        <td>{{ citizen.birthdate }}</td>
-                        <td>{{ citizen.address }}</td>
-                        <td>{{ citizen.current_location }}</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+  <div class='d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom'>
+    <h1 class='h2'>Citizens of Interest</h1>
+  </div>
+  <div>
+    <img src='/static/temp/{{ map_name }}.png'>
+  </div>
+  <br>
+  <div class='table-responsive'>
+    <table class='table table-striped table-hover'>
+      <thead>
+        <tr>
+          <th scope='col'>Citizen ID</th>
+          <th scope='col'>Full Name</th>
+          <th scope='col'>Gender</th>
+          <th scope='col'>Birthdate</th>
+          <th scope='col'>Address</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for citizen in citizens %}
+      <tr class='table-row' data-href='{{ url_for("get_citizen", citizen_id=citizen.citizen_id) }}'>
+        <td> {{ citizen.citizen_id }}</td>
+        <td>{{ citizen.first_name }} {{ citizen.last_name }}</td>
+        <td>{{ citizen.gender_name.capitalize() }}</td>
+        <td>{{ citizen.birthdate }}</td>
+        <td>Sector {{ citizen.sector }}</td>
+      </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
 {% endblock %}

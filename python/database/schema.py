@@ -1,4 +1,5 @@
 from sqlalchemy import (
+    ARRAY,
     create_engine,
     Column,
     Integer,
@@ -32,13 +33,16 @@ citizen_database = database_handler()
 class Citizen(Base):
     __tablename__ = 'citizen'
     id = Column('id', Integer, primary_key=True)
-    citizen_id = Column('citizen_id', Integer, nullable=False, unique=True)
+    citizen_id = Column('citizen_id', String, nullable=False, unique=True)
     first_name = Column('first_name', String, nullable=False)
     last_name = Column('last_name', String, nullable=False)
-    gender = Column('gender', String, nullable=False)
+    sector = Column('sector', String, nullable=False)
+    # Genders is represented by integers. 0: Male, 1: Female, 2: Non-binary
+    gender = Column('gender', Integer, nullable=False)
+    gender_name = Column('gender_name', String, nullable=False)
     birthdate = Column('birthdate', String, nullable=False)
-    address = Column('address', String, nullable=False)
-    current_location = Column('current_location', String, nullable=False)
+
+    position = Column('position', ARRAY(Integer))
 
     UniqueConstraint('first_name', 'last_name')
 
